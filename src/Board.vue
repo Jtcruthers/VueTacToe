@@ -1,17 +1,23 @@
 <template>
-  <table>
-    <tr :key="row.id" :rows="rows" v-for="(row, rowIndex) in rows">
-      <td
-        class="cell"
-        :key="cell.id"
-        :row="row"
-        v-for="(cell, cellIndex) in row"
-        @click="clickedCell(rowIndex, cellIndex)"
-      >
-        {{ cell }}
-      </td>
-    </tr>
-  </table>
+  <div>
+    <p>The current player is {{ctx.currentPlayer}}</p>
+    <table>
+      <tr :key="row.id" :rows="rows" v-for="(row, rowIndex) in rows">
+        <td
+          class="cell"
+          :key="cell.id"
+          :row="row"
+          v-for="(cell, cellIndex) in row"
+          @click="clickedCell(rowIndex, cellIndex)"
+        >
+          {{ cell }}
+        </td>
+      </tr>
+    </table>
+    <div v-if="ctx.gameover">
+      <h2>The winner is {{ctx.gameover.winner ? ctx.gameover.winner : "no one. You all suck."}}</h2>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -26,14 +32,13 @@ export default {
   },
   computed: {
     rows() {
-      const { cells = Array(9).fill('') } = this.G;
+      const { cells } = this.G;
 
       const rows = [
         [0, 1, 2],
         [3, 4, 5],
         [6, 7, 8],
       ].map(row => row.map(index => cells[index] || ''));
-      console.log(rows);
       return rows;
     }
   },
