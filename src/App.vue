@@ -1,6 +1,13 @@
 <template>
   <div id="app">
-    <board @cell-clicked="cellClicked" />
+    <board
+      :G="G"
+      :ctx="ctx"
+      :moves="client.moves"
+      :events="client.events"
+      :playerId="client.playerId"
+      @cell-clicked="cellClicked"
+    />
   </div>
 </template>
 
@@ -16,17 +23,21 @@ export default {
   },
   data() {
     return {
-      client: null,
+      G: {},
+      ctx: {}
     }
   },
   created() {
     this.client = Client({ game: TicTacToe });
     this.client.start();
+    this.client.subscribe(state => {
+      this.G = {...state.G};
+      this.ctx = {...state.ctx};
+    });
   },
   methods: {
     cellClicked(index) {
-      console.log(index);
-      //this.client.moves.clickCell(index);
+      this.client.moves.clickCell(index);
     }
   }
 }

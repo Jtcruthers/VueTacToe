@@ -17,6 +17,7 @@
 <script>
 export default {
   name: 'Board',
+  props: ["G", "ctx", "moves", "events", "playerID"],
   data() {
     return {
       rows: [["", "", ""], ["", "", ""], ["", "", ""]],
@@ -28,9 +29,6 @@ export default {
       this.$emit('cell-clicked', oneDimensionalIndex);
     }
   },
-  beforeUpdate() {
-    console.log('BEFORE UPDATE', this.rows);
-  }
 }
 </script>
 
