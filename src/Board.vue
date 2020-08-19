@@ -1,6 +1,7 @@
 <template>
   <div>
     <p>The current player is {{ctx.currentPlayer}}</p>
+    <p>You are {{playerID}}</p>
     <table>
       <tr :key="row.id" :rows="rows" v-for="(row, rowIndex) in rows">
         <td
