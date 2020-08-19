@@ -1,57 +1,17 @@
 <template>
-  <div id="app">
-    <board
-      :G="G"
-      :ctx="ctx"
-      :moves="client.moves"
-      :events="client.events"
-      :playerId="client.playerId"
-      @cell-clicked="cellClicked"
-    />
+  <div>
+    <client :playerID="0" />
+    <client :playerID="1" />
   </div>
 </template>
 
 <script>
-import { Client } from 'boardgame.io/client';
-import { TicTacToe } from './Game'
-import Board from './Board';
+import Client from './Client';
 
 export default {
   name: 'App',
   components: {
-    'board': Board,
-  },
-  data() {
-    return {
-      G: {},
-      ctx: {}
-    }
-  },
-  created() {
-    this.client = Client({ game: TicTacToe });
-    this.client.start();
-    this.client.subscribe(state => {
-      this.G = {...state.G};
-      this.ctx = {...state.ctx};
-    });
-  },
-  methods: {
-    cellClicked(index) {
-      this.client.moves.clickCell(index);
-    }
+    'client': Client,
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-  width: 100%;
-  min-height: 500px;
-}
-</style>
